@@ -6,9 +6,10 @@
     "todo": "./index.js"
   },
   "scripts": {
-    "test": "jest --experimental-vm-modules"
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "jest": "^29.7.0"
   }
 }
