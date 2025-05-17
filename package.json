@@ -1,0 +1,9 @@
+{
+  "name": "todo-cli",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": { "todo": "./index.js" },
+  "scripts": {
+    "test": "jest"
+  }
+}
