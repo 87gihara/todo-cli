@@ -1,0 +1,35 @@
+# .github/workflows/node.yml
+name: Node CI               # Actions 画面に出るワークフロー名
+
+on:                         # いつ走らせる？
+  push:                     # push 時
+    branches: [main]
+  pull_request:             # PR 作成/更新時
+    branches: [main]
+  workflow_dispatch: {}     # UI から手動実行も可
+
+jobs:
+  test:                     # ジョブ名
+    runs-on: ubuntu-latest  # ランナー OS。Ubuntu が最速・無料枠大
+
+    strategy:               # ≒行列テスト
+      matrix:
+        node-version: [22.x, 20.x]  # LTS と一つ前を検証
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4   # ① コード取得（必須） :contentReference[oaicite:1]{index=1}
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4 # ② 指定バージョンをインストール :contentReference[oaicite:2]{index=2}
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'             # npm キャッシュ自動化で高速化
+
+      - name: Install dependencies
+        run: npm ci                # ③ package-lock.json ベースで再現
+
+      - name: Run tests
+        run: npm test              # ④ Jest 実行（package.json の "test"）
+
+      # ⑤ 失敗するとジョブ全体が赤くなり、PR に “Checks ❌” が付く
