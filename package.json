@@ -6,7 +6,7 @@
     "todo": "./index.js"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest --experimental-vm-modules"
   },
   "devDependencies": {
     "jest": "^29.7.0"
